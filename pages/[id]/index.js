@@ -3,14 +3,14 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Confirm, Button, Loader } from 'semantic-ui-react';
 
-const Note = ({ note }) => {
+const Product = ({ product }) => {
     const [confirm, setConfirm] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
         if (isDeleting) {
-            deleteNote();
+            deleteProduct();
         }
     }, [isDeleting])
 
@@ -18,10 +18,10 @@ const Note = ({ note }) => {
 
     const close = () => setConfirm(false);
 
-    const deleteNote = async () => {
-        const noteId = router.query.id;
+    const deleteProduct = async () => {
+        const productId = router.query.id;
         try {
-            const deleted = await fetch(`http://localhost:3000/api/notes/${noteId}`, {
+            const deleted = await fetch(`http://localhost:3000/api/products/${productId}`, {
                 method: "Delete"
             });
 
@@ -37,14 +37,14 @@ const Note = ({ note }) => {
     }
 
     return (
-        <div className="note-container">
+        <div className="product-container">
             {isDeleting
                 ? <Loader active />
                 :
                 <>
-                    <h1>{note.title}</h1>
-                    <p>{note.description}</p>
-                    <Button color='red' onClick={open}>Delete</Button>
+                    <h1>{product.title}</h1>
+                    <p>{product.price}</p>
+                    <Button color='red' onClick={open}>Excluir</Button>
                 </>
             }
             <Confirm
@@ -56,11 +56,11 @@ const Note = ({ note }) => {
     )
 }
 
-Note.getInitialProps = async ({ query: { id } }) => {
-    const res = await fetch(`http://localhost:3000/api/notes/${id}`);
+Product.getInitialProps = async ({ query: { id } }) => {
+    const res = await fetch(`http://localhost:3000/api/products/${id}`);
     const { data } = await res.json();
 
-    return { note: data }
+    return { product: data }
 }
 
-export default Note;
+export default Product;

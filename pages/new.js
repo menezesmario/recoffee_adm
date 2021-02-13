@@ -4,8 +4,8 @@ import fetch from 'isomorphic-unfetch';
 import { Button, Form, Loader } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
 
-const NewNote = () => {
-    const [form, setForm] = useState({ title: '', description: '' });
+const NewProduct = () => {
+    const [form, setForm] = useState({ title: '', price: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errors, setErrors] = useState({});
     const router = useRouter();
@@ -13,7 +13,7 @@ const NewNote = () => {
     useEffect(() => {
         if (isSubmitting) {
             if (Object.keys(errors).length === 0) {
-                createNote();
+                createProduct();
             }
             else {
                 setIsSubmitting(false);
@@ -21,9 +21,9 @@ const NewNote = () => {
         }
     }, [errors])
 
-    const createNote = async () => {
+    const createProduct = async () => {
         try {
-            const res = await fetch('http://localhost:3000/api/notes', {
+            const res = await fetch('http://localhost:3000/api/products', {
                 method: 'POST',
                 headers: {
                     "Accept": "application/json",
@@ -55,10 +55,10 @@ const NewNote = () => {
         let err = {};
 
         if (!form.title) {
-            err.title = 'Title is required';
+            err.title = 'Um título é necessário';
         }
-        if (!form.description) {
-            err.description = 'Description is required';
+        if (!form.price) {
+            err.price = 'Um preço é necessário';
         }
 
         return err;
@@ -74,29 +74,22 @@ const NewNote = () => {
                         : <Form onSubmit={handleSubmit}>
                             <Form.Input
                                 fluid
-                                error={errors.title ? { content: 'Please enter a title', pointing: 'below' } : null}
-                                label='Title'
-                                placeholder='Title'
+                                error={errors.title ? { content: 'Por favor, adicione um nome', pointing: 'below' } : null}
+                                label='Nome'
+                                placeholder='Nome'
                                 name='title'
-                                onChange={handleChange}
-                            />
-                            <Form.TextArea
-                                fluid
-                                label='Descriprtion'
-                                placeholder='Description'
-                                name='description'
-                                error={errors.description ? { content: 'Please enter a description', pointing: 'below' } : null}
                                 onChange={handleChange}
                             />
                             <Form.Input
                                 fluid
-                                error={errors.price ? { content: 'Please enter a title', pointing: 'below' } : null}
-                                label='Price'
-                                placeholder='Price'
-                                name='title'
+                                label='Preço'
+                                placeholder='Preço'
+                                name='price'
+                                error={errors.price ? { content: 'Por favor, adicione um preço', pointing: 'below' } : null}
                                 onChange={handleChange}
                             />
-                            <Button type='submit'>Create</Button>
+                
+                            <Button type='submit'>Registrar</Button>
                         </Form>
                 }
             </div>
@@ -104,4 +97,4 @@ const NewNote = () => {
     )
 }
 
-export default NewNote;
+export default NewProduct;

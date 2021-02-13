@@ -3,18 +3,13 @@ const mongoose = require('mongoose');
 const ProductSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: [true, 'Please add a title'],
-        unique: true,
-        maxlength: [40, 'Title cannot be more than 40 characters']
-    },
-    description: {
-        type: String,
-        required: true,
-        maxlength: [200, 'Description cannot be more than 200 characters']
+        required: [true, 'Por favor, adicione um título'],
+        maxlength: [40, 'título não deve ter mais que 40 caracteres']
     },
     price: {
         type: String,
-        required: true
+        required: [true, 'Por favor, adicione um preço'],
+        maxlength: [10, 'Descrição não deve ter mais que 10 caracteres']
     }
 })
 

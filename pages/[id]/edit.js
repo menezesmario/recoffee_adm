@@ -5,7 +5,7 @@ import { Button, Form, Loader } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
 
 const EditProduct = ({ product }) => {
-    const [form, setForm] = useState({ title: product.title, description: product.description, price: product.price });
+    const [form, setForm] = useState({ title: product.title, price: product.price });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errors, setErrors] = useState({});
     const router = useRouter();
@@ -23,7 +23,7 @@ const EditProduct = ({ product }) => {
 
     const updateProduct = async () => {
         try {
-            const res = await fetch(`http://localhost:3000/api/notes/${router.query.id}`, {
+            const res = await fetch(`http://localhost:3000/api/products/${router.query.id}`, {
                 method: 'PUT',
                 headers: {
                     "Accept": "application/json",
@@ -55,20 +55,17 @@ const EditProduct = ({ product }) => {
         let err = {};
 
         if (!form.title) {
-            err.title = 'Title is required';
-        }
-        if (!form.description) {
-            err.description = 'Description is required';
+            err.title = 'Um nome é necessário';
         }
         if (!form.price) {
-            err.price = 'Price is required';
+            err.price = 'Um preço é necessário';
         }
 
         return err;
     }
 
     return (
-        <div className="form-container">
+        <div classtitle="form-container">
             <h1>Atualizar produto</h1>
             <div>
                 {
@@ -77,23 +74,24 @@ const EditProduct = ({ product }) => {
                         : <Form onSubmit={handleSubmit}>
                             <Form.Input
                                 fluid
-                                error={errors.title ? { content: 'Please enter a title', pointing: 'below' } : null}
+                                error={errors.title ? { content: 'Por favor digite um nome', pointing: 'below' } : null}
                                 label='Title'
                                 placeholder='Title'
-                                name='title'
-                                value={form.title}
+                                title='title'
+                                name={form.title}
                                 onChange={handleChange}
                             />
-                            <Form.TextArea
+                            <Form.Input
                                 fluid
-                                label='Descriprtion'
-                                placeholder='Description'
-                                name='description'
-                                error={errors.description ? { content: 'Please enter a description', pointing: 'below' } : null}
-                                value={form.description}
+                                label='Preço'
+                                placeholder='Preço'
+                                name='price'
+                                error={errors.price ? { content: 'Por favor digite uma descrição', pointing: 'below' } : null}
+                                value={form.price}
                                 onChange={handleChange}
                             />
-                            <Button type='submit'>Update</Button>
+                            
+                            <Button type='submit'>Atualizar</Button>
                         </Form>
                 }
             </div>
@@ -101,11 +99,11 @@ const EditProduct = ({ product }) => {
     )
 }
 
-EditNote.getInitialProps = async ({ query: { id } }) => {
-    const res = await fetch(`http://localhost:3000/api/notes/${id}`);
+EditProduct.getInitialProps = async ({ query: { id } }) => {
+    const res = await fetch(`http://localhost:3000/api/products/${id}`);
     const { data } = await res.json();
 
-    return { note: data }
+    return { product: data }
 }
 
-export default EditNote;
+export default EditProduct;

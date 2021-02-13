@@ -1,5 +1,5 @@
 import dbConnect from '../../../utils/dbConnect';
-import Note from '../../../models/Note';
+import Product from '../../../models/Product';
 
 dbConnect();
 
@@ -9,18 +9,18 @@ export default async (req, res) => {
     switch (method) {
         case 'GET':
             try {
-                const notes = await Note.find({});
+                const products = await Product.find({});
 
-                res.status(200).json({ success: true, data: notes })
+                res.status(200).json({ success: true, data: products })
             } catch (error) {
                 res.status(400).json({ success: false });
             }
             break;
         case 'POST':
             try {
-                const note = await Note.create(req.body);
+                const product = await Product.create(req.body);
 
-                res.status(201).json({ success: true, data: note })
+                res.status(201).json({ success: true, data: product })
             } catch (error) {
                 res.status(400).json({ success: false });
             }
