@@ -14,16 +14,16 @@ const Index = ({ products }) => {
                 <Card.Content>
                   <Card.Header>
                     <Link href={`/${product._id}`}>
-                      <a>{product.title}</a>
+                      <a style={{color: '#705705'}}>{product.title}</a>
                     </Link>
                    </Card.Header>
                 </Card.Content>
                 <Card.Content extra>
                   <Link href={`/${product._id}`}>
-                    <Button primary>Visualizar</Button>
+                    <Button style={{backgroundColor: '#705705', color: 'white'}}>Visualizar</Button>
                   </Link>
                   <Link href={`/${product._id}/edit`}>
-                    <Button primary>Editar</Button>
+                    <Button style={{backgroundColor: '#af8e23', color: 'white'}}>Editar</Button>
                   </Link>
                 </Card.Content>
               </Card>
